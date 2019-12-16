@@ -22,7 +22,7 @@ public class Main {
 
     private static void callGetOneUser() {
         System.out.println("########## Get One User ##########");
-        ResponseEntity<User> responseEntity = restTemplate().exchange(BASE_URL + "/users/{id}", HttpMethod.GET, headers(), User.class, 1);
+        ResponseEntity<User> responseEntity = restTemplate().exchange(BASE_URL + "/users/{id}", HttpMethod.GET, null, User.class, 1);
         System.out.println(responseEntity.getBody());
         System.out.println("##################################");
     }
@@ -47,7 +47,7 @@ public class Main {
             restTemplate = new RestTemplate();
             restTemplate.setMessageConverters(Collections.singletonList(new MappingJackson2HttpMessageConverter()));
             restTemplate.getInterceptors().add((request, body, execution) -> {
-                request.getHeaders().set("API-KEY", UUID.randomUUID().toString());
+                request.getHeaders().set("REST-API-KEY", UUID.randomUUID().toString());
                 request.getHeaders().setContentType(MediaType.APPLICATION_JSON);
                 return execution.execute(request, body);
             });
