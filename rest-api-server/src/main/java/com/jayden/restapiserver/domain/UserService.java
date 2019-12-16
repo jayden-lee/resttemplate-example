@@ -4,8 +4,10 @@ import com.jayden.restapiserver.dto.UserResponseDto;
 import com.jayden.restapiserver.dto.UserSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -23,5 +25,12 @@ public class UserService {
     @Transactional
     public Long save(UserSaveRequestDto requestDto) {
         return userRepository.save(requestDto.toEntity()).getId();
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserResponseDto> findAll() {
+        return userRepository.findAll().stream()
+            .map(UserResponseDto::new)
+            .collect(Collectors.toList());
     }
 }

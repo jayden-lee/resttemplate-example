@@ -6,6 +6,8 @@ import com.jayden.restapiserver.dto.UserSaveRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController(value = "/api/v1")
 public class UserRestController {
@@ -15,6 +17,11 @@ public class UserRestController {
     @GetMapping("/users/{id}")
     public UserResponseDto findById(@PathVariable Long id) {
         return userService.findById(id);
+    }
+
+    @GetMapping("/users")
+    public List<UserResponseDto> findAll() {
+        return userService.findAll();
     }
 
     @PostMapping("/users")
